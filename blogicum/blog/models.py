@@ -133,7 +133,6 @@ class Comment(models.Model):
     )
     text = models.TextField(verbose_name='Текст комментария')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Добавлено')
-    # No `updated_at` field per spec — only created_at is required
 
     class Meta:
         verbose_name = 'комментарий'

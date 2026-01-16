@@ -27,7 +27,6 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (User.USERNAME_FIELD, 'email', 'first_name', 'last_name')
-        # Removed stray patch footer
 
 
 class ProfileForm(forms.ModelForm):

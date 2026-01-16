@@ -22,12 +22,6 @@
         {% endif %}
       </div>
       <div class="card-body">
-        {% if user.is_staff %}
-        <div class="mb-3">
-          <a class="btn btn-sm btn-outline-secondary" href="/admin/blog/category/add/">Добавить категорию</a>
-          <a class="btn btn-sm btn-outline-secondary" href="/admin/blog/location/add/">Добавить местоположение</a>
-        </div>
-        {% endif %}
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {% if not '/delete/' in request.path %}

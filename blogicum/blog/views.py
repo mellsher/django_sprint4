@@ -24,7 +24,6 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    # show unpublished/future posts to their author
     if request.user.is_authenticated:
         try:
             post = Post.objects.select_related('category', 'location', 'author').get(pk=post_id)
@@ -42,7 +41,6 @@ def post_detail(request, post_id):
             pub_date__lte=timezone.now()
         )
     else:
-        # if found by pk above but not visible to anonymous, ensure category published or owner
         if not (request.user == post.author or (post.is_published and post.pub_date <= timezone.now() and post.category.is_published)):
             post = get_object_or_404(
                 Post.objects.select_related('category', 'location', 'author'),
@@ -109,7 +107,6 @@ def create_post(request):
 @login_required
 def edit_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    # ensure unauthenticated users are redirected to login when attempting POST
     if not request.user.is_authenticated:
         from django.urls import reverse
         return redirect(f"{reverse('login')}?next={request.path}")
@@ -138,7 +135,6 @@ def delete_post(request, post_id):
         post.delete()
         return redirect('blog:profile', username)
 
-    # render confirmation using existing template without form in context
     return render(request, 'blog/create.html', {'post': post})
 
 
@@ -184,7 +180,6 @@ def delete_comment(request, post_id, comment_id):
         comment.delete()
         return redirect('blog:post_detail', post_id=post_id)
 
-    # render confirmation using existing template without form in context
     return render(request, 'blog/comment.html', {'comment': comment})
 
 
